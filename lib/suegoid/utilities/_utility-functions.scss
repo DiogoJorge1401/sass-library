@@ -1,0 +1,96 @@
+@use '../variables' as *;
+@use '../functions' as *;
+
+@function generate-spacing-utilities(
+  $property,
+  $prefix,
+  $base-value
+) {
+  $directions: (
+    ($prefix + ''): '',
+    ($prefix + 'l'): '-left',
+    ($prefix + 'r'): '-right',
+    ($prefix + 't'): '-top',
+    ($prefix + 'b'): '-bottom'
+  );
+
+  $utility: ();
+
+  @each $key, $value in $directions {
+    $utility: map-merge(
+      $utility,
+      (
+        $key: (
+          'selector': $property + $value,
+          'prefix': $key,
+          'values': (
+            0: 0,
+            1: $base-value,
+            2: $base-value * 2,
+            3: $base-value * 4,
+            4: $base-value * 6,
+            5: $base-value * 8
+          )
+        )
+      )
+    );
+  }
+
+  $xAxis: (
+    $prefix + 'x':
+      (
+        'selector': $property,
+        'prefix': $prefix + 'x',
+        'values': (
+          0: 0 0,
+          1: 0 $base-value,
+          2: 0 $base-value * 2,
+          3: 0 $base-value * 4,
+          4: 0 $base-value * 6,
+          5: 0 $base-value * 8
+        )
+      )
+  );
+
+  $yAxis: (
+    $prefix + 'y':
+      (
+        'selector': $property,
+        'prefix': $prefix + 'y',
+        'values': (
+          0: 0 0,
+          1: $base-value 0,
+          2: $base-value * 2 0,
+          3: $base-value * 4 0,
+          4: $base-value * 6 0,
+          5: $base-value * 8 0
+        )
+      )
+  );
+
+  $utility: merge-maps(
+    (
+      1: $utility,
+      2: $xAxis,
+      3: $yAxis
+    )
+  );
+
+  @return $utility;
+}
+
+@function generate-padding-utilities() {
+  @return generate-spacing-utilities(
+    'padding',
+    'p',
+    $base-padding
+  );
+}
+
+@function generate-margin-utilities() {
+  @return generate-spacing-utilities(
+    'margin',
+    'm',
+    $base-margin
+  );
+}

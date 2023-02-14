@@ -1,0 +1,7 @@
+@use 'sass:math' as *;
+@use 'utility-functions' as *;
+
+$utilities: map-merge(
+  generate-padding-utilities(),
+  generate-margin-utilities()
+);

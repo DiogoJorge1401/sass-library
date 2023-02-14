@@ -1,0 +1,71 @@
+@use 'variables' as *;
+
+@each $key, $value in $colors {
+  .text#{-$key} {
+    color: $value;
+  }
+
+  .bg#{-$key} {
+    background-color: $value;
+  }
+
+  .text-hover#{-$key} {
+    transition: 0.3s;
+
+    &:hover {
+      color: $value;
+    }
+  }
+
+  .bg-hover#{-$key} {
+    transition: 0.3s;
+
+    &:hover {
+      background-color: $value;
+    }
+  }
+
+  // Variantes claras e escuras da cor
+  @if $value !=white and $value !=black {
+    @for $i from 1 through 7 {
+      $light-selector: -light-#{$i};
+      $dark-selector: -dark-#{$i};
+      $light-mixed: mix(#fff, $value, $i * 10%);
+      $dark-mixed: mix(#000, $value, $i * 10%);
+
+      // Variantes claras
+      .text#{-$key}#{$light-selector} {
+        color: $light-mixed;
+      }
+
+      .text-hover#{-$key}#{$light-selector} {
+        transition: 0.3s;
+
+        &:hover {
+          color: $light-mixed;
+        }
+      }
+
+      .bg#{-$key}#{$light-selector} {
+        background-color: $light-mixed;
+      }
+
+      // Variantes escuras
+      .text#{-$key}#{$dark-selector} {
+        color: $dark-mixed;
+      }
+
+      .text-hover#{-$key}#{$dark-selector} {
+        transition: 0.3s;
+
+        &:hover {
+          color: $dark-mixed;
+        }
+      }
+
+      .bg#{-$key}#{$dark-selector} {
+        background-color: $dark-mixed;
+      }
+    }
+  }
+}

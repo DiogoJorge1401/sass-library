@@ -1,0 +1,41 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
+.btn {
+  @include btn();
+}
+
+@each $key, $val in $colors {
+  .btn#{-$key} {
+    @include btn($val);
+    transition: 0.3s;
+
+    &:hover {
+      background-color: lighten($val, 5%);
+    }
+  }
+
+  .btn-outlined#{-$key} {
+    @include btn(#fff);
+
+    border: $base-border-thickness solid $val;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: $val;
+    }
+  }
+
+  .btn-complement#{-$key} {
+    @include btn($val);
+    color: light-comp($val);
+    font-weight: 900;
+    transition: 0.3s;
+
+    &:hover {
+      color: $val;
+      background-color: light-comp($val);
+    }
+  }
+}

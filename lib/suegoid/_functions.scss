@@ -1,0 +1,16 @@
+@function light-comp($color) {
+  $complement: complement($color);
+  $lighten-complement: lighten($complement, 5%);
+
+  @return $lighten-complement;
+}
+
+@function merge-maps($maps) {
+  $map: ();
+
+  @each $k, $v in $maps {
+    $map: map-merge($map, $v);
+  }
+
+  @return $map;
+}

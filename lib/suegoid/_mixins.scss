@@ -1,0 +1,25 @@
+@use 'variables' as *;
+
+@mixin btn($bg: #e2e2e2, $padding: $base-padding) {
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  border: 0;
+  padding: $padding $padding * 2;
+  border-radius: $base-border-radius;
+  background-color: $bg;
+}
+
+@mixin generate-utility($property, $prefix, $map) {
+  @each $key, $value in $map {
+    @if ($key == 'default') {
+      .#{$prefix} {
+        #{$property}: $value;
+      }
+    } @else {
+      .#{$prefix}-#{$key} {
+        #{$property}: $value;
+      }
+    }
+  }
+}

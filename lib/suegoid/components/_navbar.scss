@@ -1,0 +1,43 @@
+@use '../variables' as *;
+@use '../breakpoints' as *;
+
+%flex-layout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar {
+  @extend %flex-layout;
+
+  position: sticky;
+  top: 0;
+
+  padding: $base-padding $base-padding * 2;
+  background-color: #fff;
+  box-shadow: $base-box-shadow;
+
+  .site-title {
+    font-size: $base-font-size;
+
+    @include md {
+      font-size: $font-size-lg;
+    }
+
+    @include lg {
+      font-size: $font-size-xl;
+    }
+  }
+
+  .container {
+    @extend %flex-layout;
+  }
+}
+
+@each $key, $color in $colors {
+  .navbar#{-$key} {
+    @extend .navbar;
+    background-color: $color;
+  }
+}

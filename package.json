@@ -1,0 +1,14 @@
+{
+  "name": "sass-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "purgecss": "purgecss --css css/index.css --content index.html --output css/index.css",
+    "sass:run": "sass --no-source-map --watch lib/suegoid/index.scss:css/index.css"
+  },
+  "devDependencies": {
+    "purgecss": "^5.0.0",
+    "sass": "^1.58.0"
+  }
+}

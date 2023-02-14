@@ -1,0 +1,59 @@
+@use 'utility-variables' as *;
+@use 'sass:math' as *;
+@use '../variables' as *;
+@use '../mixins' as *;
+
+@include generate-utility(
+  'border-radius',
+  'br',
+  (
+    'none': 0,
+    'xs': div($base-border-radius, 4),
+    'sm': div($base-border-radius, 2),
+    'default': $base-border-radius,
+    'lg': $base-border-radius * 2,
+    'full': 50%
+  )
+);
+
+@include generate-utility(
+  'display',
+  'display',
+  (
+    'n': none,
+    'b': block,
+    'f': flex,
+    'i': inline,
+    'i-b': inline-block
+  )
+);
+
+@include generate-utility(
+  'font-size',
+  'font',
+  (
+    'sm': $font-size-sm,
+    'md': $base-font-size,
+    'lg': $font-size-lg,
+    'xl': $font-size-xl,
+    'xxl': $font-size-xxl
+  )
+);
+
+@each $k, $map in $utilities {
+  $selector: map-get($map, 'selector');
+  $prefix: map-get($map, 'prefix');
+  $values: map-get($map, 'values');
+
+  @each $key, $value in $values {
+    @if ($key == 'default') {
+      .#{$prefix} {
+        #{$selector}: $value;
+      }
+    } @else {
+      .#{$prefix}-#{$key} {
+        #{$selector}: $value;
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+@use 'sass:math' as *;
+@use 'breakpoints' as *;
+
+$grid-columns: 12;
+$grid-gaps: (
+  0: 0,
+  1: 10px,
+  2: 20px,
+  3: 30px
+);
+$justify-values: flex-start, flex-end, center, space-between,
+  space-around, space-evenly;
+$align-values: flex-start, flex-end, center;
+
+@mixin column-style($strength) {
+  flex-grow: 0;
+  width: div($strength * 100%, $grid-columns);
+  flex-basis: div($strength * 100%, $grid-columns);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@each $breakpoint, $width in $breakpoints {
+  @include media-query(map-get($breakpoints, $breakpoint)) {
+    @for $strength from 1 through $grid-columns {
+      .col-#{$strength}-#{$breakpoint} {
+        @include column-style($strength);
+      }
+    }
+  }
+}
+
+@each $key, $val in $grid-gaps {
+  .gap-#{$key} {
+    & > * {
+      padding: $val;
+    }
+
+    margin: 0 (-$val);
+  }
+}
+
+@each $breakpoint, $width in $breakpoints {
+  @include media-query(map-get($breakpoints, $breakpoint)) {
+    @each $val in $justify-values {
+      .j-#{$val}-#{$breakpoint} {
+        justify-content: $val;
+      }
+    }
+    @each $val in $align-values {
+      .a-#{$val}-#{$breakpoint} {
+        align-items: $val;
+      }
+    }
+  }
+}
